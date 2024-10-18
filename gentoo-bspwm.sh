@@ -41,11 +41,23 @@ function montar_particiones() {
 function descargar_stage3() {
     cd /mnt/gentoo
     echo "Descargando el Stage 3 Desktop Profile (OpenRC)..."
+    
+    # Descargar el archivo de texto que contiene el URL del Stage 3
     wget http://distfiles.gentoo.org/releases/amd64/autobuilds/latest-stage3-amd64-desktop-openrc.txt
+    
+    # Obtener la URL del archivo tar.xz
     STAGE3_URL=$(grep -o 'http.*\.tar\.xz' latest-stage3-amd64-desktop-openrc.txt)
+    
+    # Descargar el archivo Stage 3
+    echo "Descargando el archivo Stage 3 desde: $STAGE3_URL"
     wget $STAGE3_URL
-    echo "Extrayendo el archivo Stage 3..."
-    tar xpvf stage3-*.tar.xz --xattrs-include='*.*' --numeric-owner
+    
+    # Obtener el nombre del archivo descargado
+    STAGE3_FILE=$(basename $STAGE3_URL)
+    
+    # Extraer el archivo Stage 3
+    echo "Extrayendo el archivo $STAGE3_FILE..."
+    tar xpvf $STAGE3_FILE --xattrs-include='*.*' --numeric-owner
 }
 
 # Configurar make.conf
