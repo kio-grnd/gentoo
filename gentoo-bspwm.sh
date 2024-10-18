@@ -30,10 +30,16 @@ function seleccionar_particion_swap() {
 # Montar particiones
 function montar_particiones() {
     mkdir -p /mnt/gentoo
-    mount /dev/$particion_raiz /mnt/gentoo
+    echo "Montando la partición raíz en /mnt/gentoo..."
+    mount /dev/"$particion_raiz" /mnt/gentoo || { echo "Error al montar /dev/$particion_raiz"; exit 1; }
+
     mkdir -p /mnt/gentoo/boot
-    mount /dev/$particion_boot /mnt/gentoo/boot
-    swapon /dev/$particion_swap
+    echo "Montando la partición boot en /mnt/gentoo/boot..."
+    mount /dev/"$particion_boot" /mnt/gentoo/boot || { echo "Error al montar /dev/$particion_boot"; exit 1; }
+
+    echo "Activando swap en /dev/$particion_swap..."
+    swapon /dev/"$particion_swap" || { echo "Error al activar swap en /dev/$particion_swap"; exit 1; }
+
     echo "Particiones montadas correctamente."
 }
 
@@ -42,22 +48,15 @@ function descargar_stage3() {
     cd /mnt/gentoo
     echo "Descargando el Stage 3 Desktop Profile (OpenRC)..."
     
-    # Descargar el archivo de texto que contiene el URL del Stage 3
-    wget http://distfiles.gentoo.org/releases/amd64/autobuilds/latest-stage3-amd64-desktop-openrc.txt
-    
-    # Obtener la URL del archivo tar.xz
+    wget http://distfiles.gentoo.org/releases/amd64/autobuilds/latest-stage3-amd64-desktop-openrc.txt || { echo "Error al descargar el archivo de texto Stage 3"; exit 1; }
+
     STAGE3_URL=$(grep -o 'http.*\.tar\.xz' latest-stage3-amd64-desktop-openrc.txt)
-    
-    # Descargar el archivo Stage 3
     echo "Descargando el archivo Stage 3 desde: $STAGE3_URL"
-    wget $STAGE3_URL
-    
-    # Obtener el nombre del archivo descargado
-    STAGE3_FILE=$(basename $STAGE3_URL)
-    
-    # Extraer el archivo Stage 3
+    wget "$STAGE3_URL" || { echo "Error al descargar el archivo Stage 3"; exit 1; }
+
+    STAGE3_FILE=$(basename "$STAGE3_URL")
     echo "Extrayendo el archivo $STAGE3_FILE..."
-    tar xpvf $STAGE3_FILE --xattrs-include='*.*' --numeric-owner
+    tar xpvf "$STAGE3_FILE" --xattrs-include='*.*' --numeric-owner || { echo "Error al extraer el archivo Stage 3"; exit 1; }
 }
 
 # Configurar make.conf
@@ -74,17 +73,20 @@ EOF
 
 # Montar sistemas de archivos
 function montar_sistemas_archivos() {
+    echo "Montando sistemas de archivos..."
     mount --types proc /proc /mnt/gentoo/proc
     mount --rbind /sys /mnt/gentoo/sys
     mount --make-rslave /mnt/gentoo/sys
     mount --rbind /dev /mnt/gentoo/dev
-    mount --bind /run /mnt/gentoo/run
     mount --make-rslave /mnt/gentoo/dev
+    mount --bind /run /mnt/gentoo/run
+    mount --make-rslave /mnt/gentoo/run
     mount -t tmpfs tmpfs /mnt/gentoo/dev/shm
 }
 
 # Entrar en chroot
 function entrar_chroot() {
+    echo "Entrando en chroot..."
     cp --dereference /etc/resolv.conf /mnt/gentoo/etc/
     chroot /mnt/gentoo /bin/bash -c "source /etc/profile && export PS1=\"(chroot) \${PS1}\""
 }
@@ -94,8 +96,8 @@ function instalar_grub() {
     listar_dispositivos
     read -p "Selecciona el disco donde instalar GRUB (ejemplo: sda): " disco_grub
     echo "Instalando GRUB en /dev/$disco_grub..."
-    grub-install /dev/$disco_grub
-    grub-mkconfig -o /boot/grub/grub.cfg
+    grub-install /dev/"$disco_grub" || { echo "Error al instalar GRUB en /dev/$disco_grub"; exit 1; }
+    grub-mkconfig -o /boot/grub/grub.cfg || { echo "Error al generar la configuración de GRUB"; exit 1; }
 }
 
 # Función principal
