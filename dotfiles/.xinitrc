@@ -23,7 +23,7 @@ xsetroot -cursor_name left_ptr &
 pamixer &
 
 # nVIDIA fix-tearing
-~/scripts/nvidia-fix-tearing.sh &
+# ~/scripts/nvidia-fix-tearing.sh &
 
 # Lanzar sxhkd para atajos de teclado
 sxhkd &
