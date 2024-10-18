@@ -1,0 +1,40 @@
+# PANEL
+modules-left = round-left bspwm round-right empty-space  round-left polywins round-right
+modules-center =
+modules-right = alsa round-left cpu round-right updates mem round-left time  round-right  powermenu
+font-0 = JetBrainsMono Nerd Font:style=Bold:pixelsize=13;3
+font-1 = JetBrainsMono Nerd Font:size=13;4
+font-2 = Material Design Icons:style=Bold:size=13;3
+font-3 = unifont:fontformat=truetype:size=9;3111
+
+
+
+[module/updates]
+type = custom/script
+exec = doas xbps-install -S > /dev/null 2>&1; ~/.config/polybar/xbps-updates
+format = <label>
+interval = 4600
+label =  %output%
+label-padding = 2
+label-foreground = #BF616A
+
+
+[module/cpu]
+type = internal/cpu
+interval = 2.5
+
+format-prefix ="  "
+format =  <label>
+
+label = CPU %percentage%%
+format-background = #2a2e36
+format-foreground = #989cff
+
+[module/mem]
+type = custom/script
+exec = free -m | sed -n 's/^Mem:\s\+[0-9]\+\s\+\([0-9]\+\)\s.\+/\1/p'
+format = <label>
+format-prefix = "  "
+label = %output% MB
+label-padding = 1
+format-prefix-foreground = #d19a66

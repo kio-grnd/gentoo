@@ -1,0 +1,85 @@
+configuration {
+    modi: "drun";
+    width: 40;
+    columns: 1;
+    lines: 5;
+    font: "Iosevka 12";
+    show-icons: true;
+    icon-theme: "Oranchelo";
+    terminal: "st";
+    drun-display-format: "{icon} {name}";
+    display-drun: "  ";
+    location: 0;
+    separator-style: "solid";
+    disable-history: false;
+    hide-scrollbar: true;
+}
+
+* {
+    background-color:  #1C0C2E;  /* Fondo púrpura oscuro */
+    border-color: #8A2BE2;  /* Púrpura vibrante para los bordes */
+    text-color: #D8BFD8;  /* Texto en púrpura claro */
+    separator-color: @border-color;
+    font: "Iosevka 12";
+    show-icons: true;
+}
+
+window {
+    padding: 20px;
+    height: 320px;
+    border: 3px;
+    border-color: #6A0DAD;  /* Púrpura profundo */
+}
+
+mainbox {
+    padding: 5px;
+    border-radius: 13px;
+}
+
+inputbar {
+    children: [prompt, entry];
+}
+
+prompt {
+    background-color: #9B30FF;  /* Púrpura brillante para resaltar */
+    padding: 5px 5px 0px;
+    text-color: #1C0C2E;  /* Texto oscuro para buen contraste */
+}
+
+textbox-prompt-colon {
+    expand: false;
+    str: ":";
+}
+
+entry {
+    padding: 5px;
+}
+
+listview {
+    border: 0px 0px 0px;
+    padding: 6px 0px 0px;
+    columns: 2;
+}
+
+element {
+    padding: 5px;
+}
+
+element-icon {
+    size: 25px;
+}
+
+element selected {
+    background-color: #5D3FD3;  /* Púrpura más intenso para selección */
+    text-color: #E6E6FA;  /* Texto en lavanda claro para mejor visibilidad */
+}
+
+element urgent {
+    background-color: #800080;  /* Púrpura fuerte para elementos urgentes */
+    text-color: @background-color;
+}
+
+element active {
+    background-color: #9370DB;  /* Púrpura suave para elementos activos */
+    text-color: @background-color;
+}

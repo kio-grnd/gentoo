@@ -1,0 +1,91 @@
+! Xft Settings (Fuentes)
+Xft.antialias:       1
+Xft.hinting:         1
+Xft.autohint:        0
+Xft.hintstyle:       hintslight
+Xft.rgba:            rgb
+Xft.lcdfilter:       lcddefault
+
+! URxvt Configuración
+URxvt.font:          xft:JetBrainsMonoNL NFM:size=12
+! URxvt.font:        xft:JetBrainsMono Nerd Font Mono:size=15
+
+
+! Allow mouse scrolling
+URxvt*perl-ext-common: default,matcher
+URxvt.keysym.Control-V: perl:matcher:paste
+URxvt*matcher.button: 1
+URxvt*matcher.max-matches: 9999
+
+! Visual enhancements
+URxvt.scrollBar:     false
+URxvt*scrollTtyOutput: false
+URxvt*scrollTtyPaste: false
+URxvt*internalBorder: 10
+URxvt*externalBorder: 2
+
+! st Configuración (simple terminal)
+st.borderpx:         10
+st.alpha:            1.0  ! Valor entre 0.1 y 1.0
+
+! Colores Generales
+*foreground:         #fafafa
+*background:         #333
+*cursorColor:        #62548f
+
+! Colores Oscuros/Claros
+! Negro
+*color0:             #333333
+*color8:             #404040
+
+! Rojo
+*color1:             #d9534f
+*color9:             #FF7A75
+
+! Verde
+*color2:             #b3e9c7
+! Alternativas para verde:
+! *color2:           #4CA62B
+! *color2:           #4E9A06
+*color10:            #c2f8cb
+
+! Amarillo
+*color3:             #EAEE4C
+*color11:            #FDFF6B
+
+! Alternativas para amarillo:
+! *color3:           #faebcc
+! *color11:          #fcf8e3
+! Complementarios:
+! *color3:           #C2B74C
+! *color11:          #FFF27D
+
+! Azul
+*color4:             #4169e1
+! Alternativa para azul:
+! *color4:           #204A87
+*color12:            #638AFF
+
+! Magenta/Púrpura
+*color5:             #4f4473
+*color13:            #dddaec
+
+! Cian
+*color6:             #47a7b3
+*color14:            #56b6c2
+
+! Alternativa para cian:
+! *color6:           #23A19F
+! *color14:          #4BEDE9
+
+! Blanco
+*color7:             #f1f1f1
+*color15:            #ffffff
+! Alternativa para blanco:
+! *color15:          #999999
+
+! Tabbed Colors (Comentar o descomentar según necesidad)
+! tabbed.selfgcolor:  #d6d8eb
+! tabbed.selbgcolor:  #1e222a
+! tabbed.normfgcolor: #9294a8
+! tabbed.normbgcolor: #282c34
